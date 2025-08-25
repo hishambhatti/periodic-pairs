@@ -1,7 +1,7 @@
 // Max grid size is 6x6, so need 18 unique symbols
 
 // TODO: Right now symbols are just numbers -- update with science icons
-const symbols = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15", "16", "17", "18"]
+const symbols = ["🧬", "🧲", "🧪", "🥼", "☕️", "🔬", "🦠", "🧫", "⚡️", "💡", "🔋", "⚛︎", "🔭", "🚀", "🧠", "🌱", "🥽", "🤓"]
 
 availableIndices = [7, 8, 9, 10, 13, 14, 15, 16, 19, 20, 21, 22, 25, 26, 27, 28]
 num_pairs = availableIndices.length / 2
@@ -60,15 +60,14 @@ cards.forEach((symbol, symbolIndex) => {
     card.classList.add("card");
     card.dataset.symbol = symbol;
     card.textContent = symbolIndex
+    card.textContent = ""
 
     if (availableIndices.includes(symbolIndex)) {
         card.style.backgroundColor = "gainsboro"
         card.style.cursor = "pointer"
-        card.textContent = indexToCard[symbolIndex]
     } else {
         card.style.backgroundColor = "darkgrey"
         card.style.cursor = "default"
-        card.textContent = ""
     }
 
     card.addEventListener('mouseover', () => {
@@ -83,5 +82,34 @@ cards.forEach((symbol, symbolIndex) => {
         card.style.border = "0.15rem solid transparent"
     })
 
+    card.addEventListener('click', () => {
+        // ignores clicks if already matched/flipped or too many cards open
+        if (flipped.length < 2 && !card.classList.contains("flipped") && !matched.includes(card)) {
+            card.classList.add("flipped")
+            card.textContent = indexToCard[symbolIndex]
+            flipped.push(card)
+        }
+        
+        if (flipped.length === 2) {
+            // Check for a match
+            if (flipped[0].innerText === flipped[1].innerText) {
+                matched.push(flipped[0], flipped[1])
+                flipped = []
+                if (matched.length == availableCards.length) {
+                    message.textContent = "Win"
+                }
+                console.log(matched)
+            } else {
+                // Not a match, flip it back after a short delay
+                setTimeout(() => {
+                    flipped.forEach(c => {
+                    c.classList.remove("flipped");
+                    c.textContent = "";
+                    });
+                    flipped = [];
+                }, 800);
+            }
+        }
+    })
     board.appendChild(card)
 });

@@ -44,3 +44,8 @@ h1 {
     border: 0.15rem solid black;
 }
 
+.card.flipped {
+  background: white;
+  color: black;
+  border: 0.15rem solid #3498db;
+}
