@@ -87,7 +87,6 @@ function resetTimer() {
 window.onload = startTimer;
 
 const board = document.getElementById("game-board")
-const message = document.getElementById("message")
 let cards = [...symbols, ...symbols]
 
 let flipped = [] // cards currently flipped
@@ -154,7 +153,15 @@ cards.forEach((symbol, symbolIndex) => {
                 flipped = []
                 if (matched.length == availableCards.length) {
                     stopTimer()
-                    message.textContent = "Win"
+                    setTimeout(() => {
+                        document.body.classList.add("win-active")
+                        const win = document.getElementById("win-text")
+                        if (minutes === 0) {
+                            win.innerHTML = `Congrats! 🏆 <br> You matched all pairs in ${num_moves} moves <br> It took you ${seconds} seconds` 
+                        } else {
+                            win.innerHTML = `Congrats! 🏆 <br> You matched all pairs in ${num_moves} moves <br> It took you ${minutes} minutes and ${seconds} seconds`
+                        }
+                    }, 800);
                 }
                 console.log(matched)
             } else {
@@ -172,4 +179,8 @@ cards.forEach((symbol, symbolIndex) => {
     })
 
     board.appendChild(card)
+});
+
+document.getElementById("play-again").addEventListener("click", () => {
+    window.location.reload();
 });
