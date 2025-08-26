@@ -65,8 +65,19 @@ cards.forEach((symbol, symbolIndex) => {
     const card = document.createElement("div")
     card.classList.add("card");
     card.dataset.symbol = symbol;
-    card.textContent = symbolIndex
-    card.textContent = ""
+
+    // front (emoji side)
+    const front = document.createElement("div");
+    front.classList.add("card-face", "card-front");
+    front.textContent = indexToCard[symbolIndex];
+
+    // back (hidden side)
+    const back = document.createElement("div");
+    back.classList.add("card-face", "card-back");
+    back.textContent = "";
+
+    card.appendChild(front);
+    card.appendChild(back);
 
     if (availableIndices.includes(symbolIndex)) {
         card.style.backgroundColor = rootStyles.getPropertyValue('--card-back-color')
@@ -93,7 +104,6 @@ cards.forEach((symbol, symbolIndex) => {
         // ignores clicks if already matched/flipped or too many cards open
         if (flipped.length < 2 && !card.classList.contains("flipped") && !matched.includes(card)) {
             card.classList.add("flipped")
-            card.textContent = indexToCard[symbolIndex]
             flipped.push(card)
         }
         
@@ -113,7 +123,6 @@ cards.forEach((symbol, symbolIndex) => {
                 setTimeout(() => {
                     flipped.forEach(c => {
                     c.classList.remove("flipped");
-                    c.textContent = "";
                     });
                     flipped = [];
                     disableClick = false
@@ -121,5 +130,6 @@ cards.forEach((symbol, symbolIndex) => {
             }
         }
     })
+
     board.appendChild(card)
 });
