@@ -5,6 +5,16 @@
     font-family: 'Inter', sans-serif;
 }
 
+:root {
+    --title-color: #A8FF7A;
+    --glow-color: #acff00;
+    --unavailable-card-color: rgb(102, 102, 102); 
+    --card-back-color: rgb(197, 197, 197);
+    --card-front-color: gainsboro;
+    --border-color: #FFD700;
+    --background-color: #011b40;
+}
+
 body {
     background-color: azure;
     display: flex;
@@ -12,46 +22,46 @@ body {
     align-items: center;
     justify-content: center;
     margin: 0;
-    background-image: url('images/19366.jpg');
-    background-repeat: repeat;
-    background-size: cover;
-    background-position: center center;
+    min-height: 100vh;
+    background-color: var(--background-color)
+    
 }
 
 h1 {
-    margin: 3rem;
     font-family: 'Noto Sans', sans-serif;
+    padding: 2rem; 
+    font-weight: 700; 
+    font-size: 2.5rem; 
+    text-shadow: 1rem 1rem 2rem var(--glow-color);
+    letter-spacing: 0.1rem; 
+    color: var(--title-color);
 }
 
 .board {
     display: grid;
     grid-template-columns: repeat(6, 5rem);
     gap: 0.25rem;
+    padding: 3rem;
+    perspective: 2rem;
 }
 
 .card {
     width: 5rem;
     height: 5rem;
-    background-color: darkgray;
+    background-color: var(--card-back-color);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
-    color: black;
+    font-size: 2.5rem;
     border-radius: 0.5rem;
     cursor: default;
     user-select: none;
-    transform-style: preserve-3d;
     transition-duration: 200ms;
     border-color: transparent;
     border: 0.15rem solid transparent;
-    perspective: 1rem
+    transform-style: preserve-3d;
 }
 
-
-
 .card.flipped {
-  background: white;
-  color: black;
-  border: 0.15rem solid #3498db;
+  background: var(--card-front-color);
 }

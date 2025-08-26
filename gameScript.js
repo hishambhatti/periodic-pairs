@@ -1,7 +1,7 @@
 // Max grid size is 6x6, so need 18 unique symbols
 
 // TODO: Right now symbols are just numbers -- update with science icons
-const symbols = ["🧬", "🧲", "🧪", "🥼", "☕️", "🔬", "🦠", "🧫", "⚡️", "💡", "🔋", "⚛︎", "🔭", "🚀", "🧠", "🌱", "🥽", "🤓"]
+const symbols = ["🧬", "🧲", "🧪", "🥼", "☕️", "🔬", "🦠", "🧫", "⚡️", "⚙️", "🔋", "⚛︎", "🔭", "🚀", "🧠", "🌱", "🥽", "🤓"]
 
 availableIndices = [7, 8, 9, 10, 13, 14, 15, 16, 19, 20, 21, 22, 25, 26, 27, 28]
 num_pairs = availableIndices.length / 2
@@ -56,6 +56,8 @@ let num_moves = 0
 
 let disableClick = false
 
+const rootStyles = getComputedStyle(document.documentElement);
+
 const moves = document.getElementById("moves")
 moves.textContent = `Moves: ${num_moves}`
 
@@ -67,18 +69,19 @@ cards.forEach((symbol, symbolIndex) => {
     card.textContent = ""
 
     if (availableIndices.includes(symbolIndex)) {
-        card.style.backgroundColor = "gainsboro"
+        card.style.backgroundColor = rootStyles.getPropertyValue('--card-back-color')
         card.style.cursor = "pointer"
     } else {
-        card.style.backgroundColor = "darkgrey"
+        card.style.backgroundColor = rootStyles.getPropertyValue('--unavailable-card-color')
         card.style.cursor = "default"
     }
 
     card.addEventListener('mouseover', () => {
-        if (availableIndices.includes(symbolIndex)) {
-            card.style.border = "0.15rem solid black"
+        if (availableIndices.includes(symbolIndex) && !matched.includes(card)) {
+            card.style.border = "0.2rem solid " + rootStyles.getPropertyValue('--border-color')
         } else {
-            card.style.border = "0.15rem solid transparent"
+            card.style.border = "0.2rem solid transparent"
+            card.style.cursor = "default"
         }
     })
 
@@ -87,7 +90,6 @@ cards.forEach((symbol, symbolIndex) => {
     })
 
     card.addEventListener('click', () => {
-
         // ignores clicks if already matched/flipped or too many cards open
         if (flipped.length < 2 && !card.classList.contains("flipped") && !matched.includes(card)) {
             card.classList.add("flipped")
@@ -96,7 +98,7 @@ cards.forEach((symbol, symbolIndex) => {
         }
         
         if (flipped.length === 2 && !disableClick) {
-            // Check for a match
+            num_moves++
             if (flipped[0].innerText === flipped[1].innerText) {
                 matched.push(flipped[0], flipped[1])
                 flipped = []
@@ -106,7 +108,6 @@ cards.forEach((symbol, symbolIndex) => {
                 console.log(matched)
             } else {
                 // Not a match, flip it back after a short delay
-                num_moves++
                 moves.textContent = `Moves: ${num_moves}`
                 disableClick = true
                 setTimeout(() => {
