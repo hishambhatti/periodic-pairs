@@ -80,35 +80,34 @@ cards.forEach((symbol, symbolIndex) => {
     card.appendChild(back);
 
     if (availableIndices.includes(symbolIndex)) {
-        card.style.backgroundColor = rootStyles.getPropertyValue('--card-back-color')
-        card.style.cursor = "pointer"
+        back.style.backgroundColor = rootStyles.getPropertyValue('--card-back-color')
     } else {
-        card.style.backgroundColor = rootStyles.getPropertyValue('--unavailable-card-color')
-        card.style.cursor = "default"
+        back.style.backgroundColor = rootStyles.getPropertyValue('--unavailable-card-color')
     }
 
     card.addEventListener('mouseover', () => {
-        if (availableIndices.includes(symbolIndex) && !matched.includes(card)) {
-            card.style.border = "0.2rem solid " + rootStyles.getPropertyValue('--border-color')
+        if (availableIndices.includes(symbolIndex) && !matched.includes(card) && !flipped.includes(card) && !disableClick) {
+            back.style.borderColor = rootStyles.getPropertyValue('--border-color')
+            card.style.cursor = "pointer"
         } else {
-            card.style.border = "0.2rem solid transparent"
             card.style.cursor = "default"
         }
     })
 
     card.addEventListener('mouseout', () => {
-        card.style.border = "0.15rem solid transparent"
+        back.style.border = "0.2rem solid transparent"
     })
 
     card.addEventListener('click', () => {
         // ignores clicks if already matched/flipped or too many cards open
-        if (flipped.length < 2 && !card.classList.contains("flipped") && !matched.includes(card)) {
+        if (flipped.length < 2 && !card.classList.contains("flipped") && !matched.includes(card) && availableIndices.includes(symbolIndex) && !disableClick) {
             card.classList.add("flipped")
             flipped.push(card)
         }
         
         if (flipped.length === 2 && !disableClick) {
             num_moves++
+            moves.textContent = `Moves: ${num_moves}`
             if (flipped[0].innerText === flipped[1].innerText) {
                 matched.push(flipped[0], flipped[1])
                 flipped = []
@@ -118,7 +117,6 @@ cards.forEach((symbol, symbolIndex) => {
                 console.log(matched)
             } else {
                 // Not a match, flip it back after a short delay
-                moves.textContent = `Moves: ${num_moves}`
                 disableClick = true
                 setTimeout(() => {
                     flipped.forEach(c => {
