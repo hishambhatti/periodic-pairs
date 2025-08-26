@@ -45,6 +45,47 @@ function shuffleArray(array) {
   return array;
 }
 
+let seconds = 0
+let minutes = 0
+const timerDisplay = document.getElementById("time")
+let timerInterval;
+
+function startTimer() {
+    if (timerInterval) {
+        clearInterval(timerInterval)
+    }
+    resetTimer()
+    timerInterval = setInterval(updateTimer, 1000)
+}
+
+function updateTimer() {
+    seconds++;
+    if (seconds === 60) {
+        seconds = 0;
+        minutes++;
+    }
+
+    // Format the time for display with leading zeros
+    const formattedSeconds = String(seconds).padStart(2, '0');
+    const formattedMinutes = String(minutes).padStart(2, '0');
+
+    timerDisplay.textContent = `Time: ${formattedMinutes}:${formattedSeconds}`;
+}
+
+function stopTimer() {
+    clearInterval(timerInterval);
+}
+
+function resetTimer() {
+    stopTimer();
+    seconds = 0;
+    minutes = 0;
+    hours = 0;
+    timerDisplay.textContent = "Time: 00:00";
+}
+
+window.onload = startTimer;
+
 const board = document.getElementById("game-board")
 const message = document.getElementById("message")
 let cards = [...symbols, ...symbols]
@@ -112,6 +153,7 @@ cards.forEach((symbol, symbolIndex) => {
                 matched.push(flipped[0], flipped[1])
                 flipped = []
                 if (matched.length == availableCards.length) {
+                    stopTimer()
                     message.textContent = "Win"
                 }
                 console.log(matched)
