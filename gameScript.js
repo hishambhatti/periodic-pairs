@@ -13,9 +13,6 @@ for (let i = 0; i < availableIndices.length; i++) {
   indexToCard[availableIndices[i]] = availableCards[i];
 }
 
-console.log(indexToCard)
-
-
 function getRandomSubsetIterative(arr, size) {
   const subset = [];
   const tempArray = [...arr]; // Create a copy
@@ -55,6 +52,11 @@ let cards = [...symbols, ...symbols]
 let flipped = [] // cards currently flipped
 let matched = [] // cards currently matched
 
+let num_moves = 0
+
+const moves = document.getElementById("moves")
+moves.textContent = `Moves: ${num_moves}`
+
 cards.forEach((symbol, symbolIndex) => {
     const card = document.createElement("div")
     card.classList.add("card");
@@ -83,6 +85,7 @@ cards.forEach((symbol, symbolIndex) => {
     })
 
     card.addEventListener('click', () => {
+
         // ignores clicks if already matched/flipped or too many cards open
         if (flipped.length < 2 && !card.classList.contains("flipped") && !matched.includes(card)) {
             card.classList.add("flipped")
@@ -101,6 +104,8 @@ cards.forEach((symbol, symbolIndex) => {
                 console.log(matched)
             } else {
                 // Not a match, flip it back after a short delay
+                num_moves++
+                moves.textContent = `Moves: ${num_moves}`
                 setTimeout(() => {
                     flipped.forEach(c => {
                     c.classList.remove("flipped");
