@@ -54,6 +54,8 @@ let matched = [] // cards currently matched
 
 let num_moves = 0
 
+let disableClick = false
+
 const moves = document.getElementById("moves")
 moves.textContent = `Moves: ${num_moves}`
 
@@ -93,7 +95,7 @@ cards.forEach((symbol, symbolIndex) => {
             flipped.push(card)
         }
         
-        if (flipped.length === 2) {
+        if (flipped.length === 2 && !disableClick) {
             // Check for a match
             if (flipped[0].innerText === flipped[1].innerText) {
                 matched.push(flipped[0], flipped[1])
@@ -106,12 +108,14 @@ cards.forEach((symbol, symbolIndex) => {
                 // Not a match, flip it back after a short delay
                 num_moves++
                 moves.textContent = `Moves: ${num_moves}`
+                disableClick = true
                 setTimeout(() => {
                     flipped.forEach(c => {
                     c.classList.remove("flipped");
                     c.textContent = "";
                     });
                     flipped = [];
+                    disableClick = false
                 }, 800);
             }
         }
