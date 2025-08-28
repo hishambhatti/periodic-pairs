@@ -156,11 +156,7 @@ cards.forEach((symbol, symbolIndex) => {
                     setTimeout(() => {
                         document.body.classList.add("win-active")
                         const win = document.getElementById("win-text")
-                        if (minutes === 0) {
-                            win.innerHTML = `Congrats! 🏆 <br> You matched all pairs in ${num_moves} moves <br> It took you ${seconds} seconds` 
-                        } else {
-                            win.innerHTML = `Congrats! 🏆 <br> You matched all pairs in ${num_moves} moves <br> It took you ${minutes} minutes and ${seconds} seconds`
-                        }
+                        win.innerHTML = `Congrats! 🏆 <br> You matched all pairs in ${num_moves} ${num_moves == 1 ? "move" : "moves"} <br> It took you ${minutes == 0 ? "" : (minutes == 1 ? "1 minute" : minutes + " minutes")} ${minutes != 0 && seconds != 0 ? " and " : ""} ${seconds == 1 ? "1 second" : (seconds == 0 && minutes != 0 ? "" : seconds + " seconds")} `
                     }, 800);
                 }
                 console.log(matched)
