@@ -103,7 +103,7 @@ body.win-active #win-overlay {
   border: 0.1rem solid white;
   color: white;
   border-radius: 1rem;
-  padding: 1rem;
+  padding: 0.5rem;
   justify-content: center;
   margin: 1rem auto;
   max-width: 600px;
@@ -127,10 +127,14 @@ p {
   font-size: 1.25rem;
   color: var(--title-color);
   font-weight: 600; 
-  line-height: 1.5;
-  padding: 1rem; 
+  line-height: 1.25;
+  padding-top: 1rem; 
   text-align: center;
   text-shadow: 0rem 0rem 1rem var(--glow-color);
+}
+
+#alert {
+  color: #FFD700;
 }
 
 #win-overlay button, #setup-screen button {

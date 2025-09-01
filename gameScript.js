@@ -40,9 +40,13 @@ for (let i = 0; i < 36; i++) {
   selector.appendChild(card);
 }
 
+evenAlert = document.getElementById("alert")
+evenAlert.style.visibility = "hidden"
+
 document.getElementById("start-game").addEventListener("click", () => {
   if (availableIndices.size % 2 !== 0) {
-    alert("Please select an even number of tiles!");
+    evenAlert.style.visibility = "visible"
+    //alert("Please select an even number of tiles!");
     return;
   }
   
