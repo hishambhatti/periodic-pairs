@@ -5,7 +5,6 @@ const rootStyles = getComputedStyle(document.documentElement);
 for (let i = 0; i < 36; i++) {
   const card = document.createElement("div");
   card.classList.add("selector-tile");
-  card.style.border = "0.15rem solid black"
 
   function updateCards() {
         if (availableIndices.has(i)) {
@@ -27,7 +26,6 @@ for (let i = 0; i < 36; i++) {
   })
 
     card.addEventListener('mouseover', () => {
-        //card.style.borderColor = rootStyles.getPropertyValue('--border-color')
         card.style.scale = 1.15
         card.style.zIndex = 1
     })
@@ -46,7 +44,6 @@ evenAlert.style.visibility = "hidden"
 document.getElementById("start-game").addEventListener("click", () => {
   if (availableIndices.size % 2 !== 0) {
     evenAlert.style.visibility = "visible"
-    //alert("Please select an even number of tiles!");
     return;
   }
   
@@ -196,7 +193,7 @@ function initGame(availableIndices) {
         })
 
         card.addEventListener('mouseout', () => {
-            back.style.border = "0.2rem solid transparent"
+            back.style.borderColor = "transparent"
         })
 
         card.addEventListener('click', () => {
