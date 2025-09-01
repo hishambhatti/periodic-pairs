@@ -11,20 +11,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- Add in multiple screens later -->
-    <h1>💡 Periodic Pairs 💡</h1>
 
-    <div id="scorecard">
-        <span id="moves"></span>
-        <span id="time"></span>
+    <!-- Setup screen -->
+    <div id="setup-screen">
+        <h1>💡 Periodic Pairs 💡</h1>
+        <div id="instructions-box">
+            <h4>Instructions:</h4>
+            <ul>
+                <li>Match all pairs of similar cards by flipping them</li>
+                <li>Click on a card to flip it</li>
+                <li>If two cards you flipped are not the same, they will be flipped back (so try to remember!)</li>
+            </ul>
+        </div>
+        <p>Select your gameboard! (light = active, dark = inactive)</p>
+        <div id="grid-selector"></div>
+        <button id="start-game">Play</button>
     </div>
 
-    <div id="game-board" class="board"> </div>
+    <!-- Game Screen (Hidden initially) -->
+     <div id="game-screen" style="display: none;">
+        <h1>💡 Periodic Pairs 💡</h1>
 
-    <div id="win-overlay">
-        <h2 id="win-text" style="justify-content: center;"></h2>
-        <button id="play-again">Play Again</button>
-    </div>
+        <div id="scorecard">
+            <span id="moves"></span>
+            <span id="time"></span>
+        </div>
+
+        <div id="game-board" class="board"> </div>
+
+        <div id="win-overlay">
+            <h2 id="win-text" style="justify-content: center;"></h2>
+            <button id="play-again">Play Again</button>
+        </div>
+     </div>
 
     <script src="gameScript.js"></script>
 </body>

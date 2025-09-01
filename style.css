@@ -27,7 +27,7 @@ body {
 
 h1 {
     font-family: 'Noto Sans', sans-serif;
-    padding: 2rem; 
+    padding: 1.5rem; 
     font-weight: 700; 
     font-size: 4rem; 
     text-shadow: 0rem 0rem 2rem var(--glow-color);
@@ -44,13 +44,15 @@ h1 {
     font-weight: 500;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
+    gap: 8rem;
     width: 100%;
-    max-width: 500px;
+    max-width: 1000px;
 }
 
 .board {
     display: grid;
+    justify-content: center;
     grid-template-columns: repeat(6, 4.8rem);
     gap: 0.3rem;
     padding: 2rem;
@@ -97,7 +99,41 @@ body.win-active #win-overlay {
   line-height: 1.5;
 }
 
-#win-overlay button {
+#instructions-box {
+  border: 0.1rem solid white;
+  color: white;
+  border-radius: 1rem;
+  padding: 1rem;
+  justify-content: center;
+  margin: 1rem auto;
+  max-width: 600px;
+  box-shadow: 0 0 0.75rem var(--glow-color);
+  text-shadow: 0rem 0rem 1rem var(--glow-color);
+  line-height: 1.5;
+}
+
+h4 {
+  text-align: center;
+  font-size: 1.5rem;
+}
+
+ul {
+  font-size: 1rem;
+  line-height: 1.5;
+  padding: 1rem; 
+}
+
+p {
+  font-size: 1.25rem;
+  color: var(--title-color);
+  font-weight: 600; 
+  line-height: 1.5;
+  padding: 1rem; 
+  text-align: center;
+  text-shadow: 0rem 0rem 1rem var(--glow-color);
+}
+
+#win-overlay button, #setup-screen button {
   font-size: 1.2rem;
   padding: 0.8rem 1.5rem;
   border: none;
@@ -110,7 +146,7 @@ body.win-active #win-overlay {
   transition: transform 0.2s ease;
 }
 
-#win-overlay button:hover {
+#win-overlay button:hover, #setup-screen button:hover {
   transform: scale(1.05);
 }
 
@@ -150,3 +186,24 @@ body.win-active #win-overlay {
   transform: rotateY(180deg);
 }
 
+#grid-selector {
+  display: grid;
+  grid-template-columns: repeat(6, 3rem);
+  margin: 1rem 0;
+  justify-content: center;
+}
+
+.selector-tile {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transform: scale(1);
+  transition: all 0.1s
+}
+
+#setup-screen {
+  display: flex;
+  flex-direction: column; /* Stacks the child elements vertically */
+  align-items: center; /* Centers the children horizontally */
+}
