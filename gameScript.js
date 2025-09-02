@@ -42,10 +42,16 @@ evenAlert = document.getElementById("alert")
 evenAlert.style.visibility = "hidden"
 
 document.getElementById("start-game").addEventListener("click", () => {
-  if (availableIndices.size % 2 !== 0) {
-    evenAlert.style.visibility = "visible"
-    return;
-  }
+    if (availableIndices.size === 0) {
+        evenAlert.textContent = "Too easy! Select at least 2 tiles."
+        evenAlert.style.visibility = "visible"
+        return;
+    }
+    if (availableIndices.size % 2 !== 0) {
+        evenAlert.textContent = "Please select an even number of tiles!"
+        evenAlert.style.visibility = "visible"
+        return;
+    }
   
   // hide setup, show game
   document.getElementById("setup-screen").style.display = "none";
