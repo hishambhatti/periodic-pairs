@@ -1,7 +1,12 @@
-const selector = document.getElementById("grid-selector");
-let availableIndices = new Set([7, 8, 9, 10, 13, 14, 15, 16, 19, 20, 21, 22, 25, 26, 27, 28]);
 const rootStyles = getComputedStyle(document.documentElement);
 
+// Title Screen
+const selector = document.getElementById("grid-selector");
+
+// Indices corresponding to cards that are chosen for the gameboard
+let availableIndices = new Set([7, 8, 9, 10, 13, 14, 15, 16, 19, 20, 21, 22, 25, 26, 27, 28]);
+
+// Adds each card in a 6x6 grid
 for (let i = 0; i < 36; i++) {
   const card = document.createElement("div");
   card.classList.add("selector-tile");
@@ -16,6 +21,7 @@ for (let i = 0; i < 36; i++) {
 
   updateCards()
 
+  // Swaps card in our available set if clicked
   card.addEventListener("click", () => {
     if (availableIndices.has(i)) {
         availableIndices.delete(i)
@@ -25,6 +31,7 @@ for (let i = 0; i < 36; i++) {
     updateCards()
   })
 
+    // Card grows larger and in front when hovering over it
     card.addEventListener('mouseover', () => {
         card.style.scale = 1.15
         card.style.zIndex = 1
@@ -41,7 +48,9 @@ for (let i = 0; i < 36; i++) {
 evenAlert = document.getElementById("alert")
 evenAlert.style.visibility = "hidden"
 
+// Start button for game
 document.getElementById("start-game").addEventListener("click", () => {
+    // Prevents invalid boards: no cards selected or odd number
     if (availableIndices.size === 0) {
         evenAlert.textContent = "Too easy! Select at least 2 tiles."
         evenAlert.style.visibility = "visible"
@@ -53,62 +62,62 @@ document.getElementById("start-game").addEventListener("click", () => {
         return;
     }
   
-  // hide setup, show game
+  // Hide setup, show game
   document.getElementById("setup-screen").style.display = "none";
   document.getElementById("game-screen").style.display = "block";
 
-  // now call your existing board setup logic
   input = [...availableIndices].sort()
   initGame(input);
 });
 
-
+// Game Screen
 function initGame(availableIndices) {
     // Max grid size is 6x6, so need 18 unique symbols
     const symbols = ["🧬", "🧲", "🧪", "🥼", "☕️", "🔬", "🦠", "🧫", "⚡️", "⚙️", "🔋", "⚛︎", "🔭", "🚀", "🧠", "🌱", "🥽", "🤓"]
 
-    //availableIndices = [7, 8]
+    // Selects random symbols and randomizes them amongst the cards
     num_pairs = availableIndices.length / 2
     const randomSubset = getRandomSubsetIterative(symbols, num_pairs)
     const availableCards = shuffleArray([...randomSubset, ...randomSubset])
-    const indexToCard = {}
+    const indexToCard = {} // index of card (0-35) --> symbol (e.g. ⚙️)
 
     for (let i = 0; i < availableIndices.length; i++) {
     indexToCard[availableIndices[i]] = availableCards[i];
     }
 
     function getRandomSubsetIterative(arr, size) {
-    const subset = [];
-    const tempArray = [...arr]; // Create a copy
+        const subset = [];
+        const tempArray = [...arr]; // Create a copy
 
-    while (subset.length < size && tempArray.length > 0) {
-        const randomIndex = Math.floor(Math.random() * tempArray.length);
-        subset.push(tempArray[randomIndex]);
-        tempArray.splice(randomIndex, 1); // Remove selected element
-    }
-    return subset;
+        while (subset.length < size && tempArray.length > 0) {
+            const randomIndex = Math.floor(Math.random() * tempArray.length);
+            subset.push(tempArray[randomIndex]);
+            tempArray.splice(randomIndex, 1); // Remove selected element
+        }
+        return subset;
     }
 
     function shuffleArray(array) {
-    let currentIndex = array.length;
-    let randomIndex;
+        let currentIndex = array.length;
+        let randomIndex;
 
-    // While there remain elements to shuffle.
-    while (currentIndex !== 0) {
-        // Pick a remaining element.
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
+        // While there remain elements to shuffle.
+        while (currentIndex !== 0) {
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
 
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [
-        array[randomIndex],
-        array[currentIndex],
-        ];
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex],
+            array[currentIndex],
+            ];
+        }
+
+        return array;
     }
 
-    return array;
-    }
-
+    // Initializes the timer
     let seconds = 0
     let minutes = 0
     const timerDisplay = document.getElementById("time")
@@ -153,14 +162,12 @@ function initGame(availableIndices) {
     const board = document.getElementById("game-board")
     let cards = [...symbols, ...symbols]
 
-    let flipped = [] // cards currently flipped
-    let matched = [] // cards currently matched
+    let flipped = [] // Cards currently flipped
+    let matched = [] // Cards currently matched
 
     let num_moves = 0
 
-    let disableClick = false
-
-    const rootStyles = getComputedStyle(document.documentElement);
+    let disableClick = false // Prevents clicks at certain times (e.g. when card is being flipped over)
 
     const moves = document.getElementById("moves")
     moves.textContent = `Moves: ${num_moves}`
@@ -170,12 +177,12 @@ function initGame(availableIndices) {
         card.classList.add("card");
         card.dataset.symbol = symbol;
 
-        // front (emoji side)
+        // Front (emoji side)
         const front = document.createElement("div");
         front.classList.add("card-face", "card-front");
         front.textContent = indexToCard[symbolIndex];
 
-        // back (hidden side)
+        // Back (hidden side)
         const back = document.createElement("div");
         back.classList.add("card-face", "card-back");
         back.textContent = "";
@@ -183,12 +190,14 @@ function initGame(availableIndices) {
         card.appendChild(front);
         card.appendChild(back);
 
+        // Cards that have been chosen in this gameboard are lighter than those unavailable
         if (availableIndices.includes(symbolIndex)) {
             back.style.backgroundColor = rootStyles.getPropertyValue('--card-back-color')
         } else {
             back.style.backgroundColor = rootStyles.getPropertyValue('--unavailable-card-color')
         }
 
+        // Adds a border and pointer when hover over an available card
         card.addEventListener('mouseover', () => {
             if (availableIndices.includes(symbolIndex) && !matched.includes(card) && !flipped.includes(card) && !disableClick) {
                 back.style.borderColor = rootStyles.getPropertyValue('--border-color')
@@ -203,7 +212,7 @@ function initGame(availableIndices) {
         })
 
         card.addEventListener('click', () => {
-            // ignores clicks if already matched/flipped or too many cards open
+            // Ignores clicks if already matched/flipped or too many cards open or disableClick set
             if (flipped.length < 2 && !card.classList.contains("flipped") && !matched.includes(card) && availableIndices.includes(symbolIndex) && !disableClick) {
                 card.classList.add("flipped")
                 flipped.push(card)
@@ -212,10 +221,13 @@ function initGame(availableIndices) {
             if (flipped.length === 2 && !disableClick) {
                 num_moves++
                 moves.textContent = `Moves: ${num_moves}`
+
                 if (flipped[0].innerText === flipped[1].innerText) {
+                    // Match! Clear flipped
                     matched.push(flipped[0], flipped[1])
                     flipped = []
                     if (matched.length == availableCards.length) {
+                        // Win! Cut timer and start win overlay
                         stopTimer()
                         setTimeout(() => {
                             document.body.classList.add("win-active")
