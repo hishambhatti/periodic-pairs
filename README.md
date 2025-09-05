@@ -1,6 +1,7 @@
 # Periodic Pairs
 
-This is a simple matching game for science-type icons! The twist is that YOU design your own gameboard
+This is a simple matching game for science-type icons! The twist is that YOU design your own gameboard!
+
 Game available at https://hishambhatti.github.io/periodic-pairs
 
 ![Image of Game Screen](images/gamescreen_big.png)
@@ -25,7 +26,7 @@ This game is compatible for any screen size (mobile, desktop, tablet, etc.)
 #### Title Screen
 
 <div style="display: flex; justify-content: space-around;">
-  <img src="images/start_big.png" alt="Title Screen Big" width="400"/>
+  <img src="images/start_big.png" alt="Title Screen Big" height="400"/>
   <img src="images/start_small.png" alt="Title Screen Small" width="400"/>
 </div>
 
