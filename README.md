@@ -2,7 +2,7 @@
 
 This is a simple matching game for science-type icons! The twist is that YOU design your own gameboard!
 
-Game available at https://hishambhatti.github.io/periodic-pairs
+Game **available** at **https://hishambhatti.github.io/periodic-pairs**
 
 ![Image of Game Screen](images/gamescreen_big.png)
 
@@ -10,7 +10,7 @@ Game available at https://hishambhatti.github.io/periodic-pairs
 
 I graduated from UW a few months ago never having taken a frontend course or exploring frontend development in any capacity. However, I have always been interested in frontend as its the key to unlocking amazing user experiences.
 
-I followed a tutorial to learn HTML, CSS, and Javascript. To put these skills to use, I created this game! Yes, everything in this was raw frontend. No frameworks, no libraries.
+I followed a tutorial to learn HTML, CSS, and Javascript. To put these skills to use, I created this game! Yes, everything in this was **raw frontend**. No frameworks, no libraries.
 
 ## Instructions
 
@@ -25,17 +25,13 @@ This game is compatible for any screen size (mobile, desktop, tablet, etc.)
 
 #### Title Screen
 
-<div style="display: flex; justify-content: space-around;">
-  <img src="images/start_big.png" alt="Title Screen Big" height="400"/>
-  <img src="images/start_small.png" alt="Title Screen Small" width="400"/>
-</div>
+| ![Title Screen Big](images/start_big.png) | ![Title Screen Small](images/start_small.png) |
+| :---: | :---: |
 
 #### Game Screen
 
-<div style="display: flex; justify-content: space-around;">
-  <img src="images/gamescreen_big.png" alt="Game Screen Big" width="400"/>
-  <img src="images/gamescreen_small.png" alt="Game Screen Small" width="400"/>
-</div>
+| ![Game Screen Big](images/gamescreen_big.png) | ![Game Screen Small](images/gamescreen_small.png) |
+| :---: | :---: |
 
 #### Win Screen
 
@@ -43,4 +39,6 @@ This game is compatible for any screen size (mobile, desktop, tablet, etc.)
 
 ## Credits
 
-
+* VectorStatic: https://github.com/VectorStatic/Memory-Matching-Game
+* Google Fonts: Inter
+* Jamezmca HTML-CSS Full Coure: https://github.com/jamezmca/html-css-full-course
